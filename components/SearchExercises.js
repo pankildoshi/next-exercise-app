@@ -1,0 +1,125 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import HorizontalScrollbar from "./HorizontalScrollbar";
+import ExerciseCard from "./ExerciseCard";
+import Spinner from "./Spinner";
+
+export default function SearchExercises() {
+  const [bodyPart, setBodyPart] = useState("all");
+  const [bodyPartList, setBodyPartList] = useState(["all"]);
+
+  const [isSearched, setIsSearched] = useState(false);
+  const [searching, setSearching] = useState(false);
+  const [search, setSearch] = useState("");
+  const [exercises, setExercises] = useState([]);
+  const [filteredExercises, setFilterExercises] = useState([]);
+
+  useEffect(() => {
+    fetch("api/exercises/bodypartlist")
+      .then((res) => res.json())
+      .then((data) => setBodyPartList(["all", ...data]));
+
+    fetch("api/exercises")
+      .then((res) => res.json())
+      .then((data) => setExercises(data));
+  }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setIsSearched(true);
+    setSearching(true);
+
+    fetch(`api/exercises/name/${search}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setExercises(data);
+      });
+
+    handleBodyPartChange(bodyPart);
+    setSearching(false);
+  };
+
+  const handleBodyPartChange = (bodyPartLocal) => {
+    setFilterExercises([]);
+
+    let selectedExercises = [];
+    if (bodyPartLocal === "all") {
+      setFilterExercises(exercises);
+    } else {
+      for (let exercise of exercises) {
+        if (exercise.bodyPart === bodyPartLocal) {
+          selectedExercises.push(exercise);
+        }
+      }
+      setFilterExercises(selectedExercises);
+    }
+    console.log(filteredExercises);
+  };
+
+  return (
+    <section id="exercises" className="w-full my-8 text-center">
+      <p className="font-bold text-3xl md:text-6xl mb-12">
+        Awesome Exercises You <br /> Should Know
+      </p>
+      <div>
+        <form onSubmit={handleSearch}>
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="border text-lg font-semibold px-4 py-4 w-1/2"
+            placeholder="Search Exercises, Bodypart"
+          />
+          <button
+            type="submit"
+            className="bg-rose-600 text-white px-8 py-4 text-lg font-semibold"
+          >
+            Search
+          </button>
+        </form>
+      </div>
+      <div className="mt-8">
+        <HorizontalScrollbar
+          data={bodyPartList}
+          bodyPart={bodyPart}
+          setBodyPart={setBodyPart}
+          handleBodyPartChange={handleBodyPartChange}
+        />
+      </div>
+      <div className="text-left mt-16 px-2 lg:px-10 ">
+        <p className="text-4xl border-b-4 border-rose-600 font-bold pb-4">
+          {isSearched ? "Search Results" : "Recommanded Exercises"}
+        </p>
+        {searching ? (
+          <Spinner text="Searching..." />
+        ) : (
+          <>
+            {" "}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8">
+              {isSearched === false && filteredExercises.length === 0
+                ? exercises.map((exercise) => (
+                    <ExerciseCard key={exercise.id} exercise={exercise} />
+                  ))
+                : filteredExercises.map((exercise) => (
+                    <ExerciseCard key={exercise.id} exercise={exercise} />
+                  ))}
+            </div>
+            <div>
+              {isSearched === true && filteredExercises.length === 0 ? (
+                <div className="w-full h-[60vh] text-center">
+                  <p className="font-bold text-rose-200  text-[200px] hidden lg:block">
+                    Oops!
+                  </p>
+                  <p className="text-2xl font-semibold">No Search Results...</p>
+                </div>
+              ) : (
+                <div></div>
+              )}
+            </div>
+          </>
+        )}
+      </div>
+    </section>
+  );
+}
