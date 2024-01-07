@@ -3,7 +3,7 @@ import SearchExercises from "@/components/SearchExercises";
 
 export default function Home() {
   return (
-    <div className="p-6">
+    <div className="px-6">
       <Hero />
       <SearchExercises />
     </div>

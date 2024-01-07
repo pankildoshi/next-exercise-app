@@ -30,7 +30,8 @@ export default function Navbar() {
         </Link>
         <Link href="/">Home</Link>
         <Link href="/#exercises">Exercises</Link>
-
+      </div>
+      <div className="flex gap-6 md:gap-12 items-center justify-evenly font-medium text-xl">
         {authenticated ? (
           <>
             <Link href="/workout">My Workout</Link>
