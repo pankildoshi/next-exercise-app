@@ -1,14 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "@/assets/images/Logo.png";
 import Image from "next/image";
-
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
-  const { data: session, status } = useSession();
+  const [authenticated, setAuthenticated] = useState(false);
+  const [displayName, setDisplayName] = useState("");
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      setAuthenticated(true);
+      setDisplayName(window.localStorage.getItem("displayName"));
+    } else {
+      setAuthenticated(false);
+    }
+  }, [authenticated]);
 
   return (
     <div className="p-6 flex justify-between">
@@ -19,12 +31,16 @@ export default function Navbar() {
         <Link href="/">Home</Link>
         <Link href="/#exercises">Exercises</Link>
 
-        {status === "authenticated" ? (
+        {authenticated ? (
           <>
             <Link href="/workout">My Workout</Link>
-            <p>{session.user?.name}</p>
+            <p>{displayName}</p>
             <button
-              onClick={() => signOut("google")}
+              onClick={() => {
+                window.localStorage.removeItem("token");
+                window.localStorage.removeItem("displayName");
+                setAuthenticated("false");
+              }}
               className="bg-rose-600 rounded-lg text-white px-4 py-2 text-lg font-semibold"
             >
               Sign Out
@@ -32,7 +48,9 @@ export default function Navbar() {
           </>
         ) : (
           <button
-            onClick={() => signIn("google")}
+            onClick={() => {
+              router.push("/auth/login");
+            }}
             className="bg-rose-600 rounded-lg text-white px-4 py-2 text-lg font-semibold"
           >
             Sign In

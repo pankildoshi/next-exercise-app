@@ -19,8 +19,8 @@ export default function RootLayout({ children }) {
           <div className="lg:mx-auto lg:max-w-screen-2xl">
             <Navbar />
             {children}
+            <Footer />
           </div>
-          <Footer />
         </Provider>
       </body>
     </html>
