@@ -54,7 +54,6 @@ export default function SearchExercises() {
       }
       setFilterExercises(selectedExercises);
     }
-    console.log(filteredExercises);
   };
 
   return (
@@ -96,7 +95,7 @@ export default function SearchExercises() {
         ) : (
           <>
             {" "}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8">
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8">
               {isSearched === false && filteredExercises.length === 0
                 ? exercises.map((exercise) => (
                     <ExerciseCard key={exercise.id} exercise={exercise} />

@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+export let isAuthenticated = false;
+
 export default function Login() {
   let router = useRouter();
   const [email, setEmail] = useState("");
@@ -22,7 +24,6 @@ export default function Login() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.status === 200) {
           setStatusError("");
           alert("Login Successful");
@@ -31,6 +32,7 @@ export default function Login() {
             "displayName",
             data.user.firstName + " " + data.user.lastName
           );
+          isAuthenticated = true;
           router.push("/");
         } else {
           setStatusError(data.error);

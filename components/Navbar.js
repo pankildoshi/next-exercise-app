@@ -20,7 +20,7 @@ export default function Navbar() {
     } else {
       setAuthenticated(false);
     }
-  }, [authenticated]);
+  });
 
   return (
     <div className="p-6 flex justify-between">

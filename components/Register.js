@@ -25,7 +25,7 @@ export default function Register() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        
         if (data.status === 201) {
           router.push("/auth/login");
         } else {

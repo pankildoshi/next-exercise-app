@@ -31,7 +31,7 @@ export const POST = async (req, res) => {
   } catch (error) {
     console.log(error);
     return new Response(
-      JSON.stringify({ message: "Something went wrong", status: 201 })
+      JSON.stringify({ message: "Something went wrong", status: 500 })
     );
   }
 };

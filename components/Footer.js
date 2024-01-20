@@ -6,7 +6,7 @@ import Logo from "@/assets/images/Logo.png";
 export default function Footer() {
   return (
     <footer className="border-t-2">
-      <div className="mx-auto px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center sm:justify-between">
           <div className="flex justify-center items-baseline gap-2 sm:justify-start">
             <Link href="/">
