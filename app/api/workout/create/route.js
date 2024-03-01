@@ -12,9 +12,13 @@ export const POST = async (req) => {
       userId,
     });
 
-    await newWorkout.save();
+    const response = await newWorkout.save();
     return new Response(
-      JSON.stringify({ message: "Workout created", status: 201 })
+      JSON.stringify({
+        message: "Workout created",
+        data: response,
+        status: 201,
+      })
     );
   } catch (error) {
     console.log(error);

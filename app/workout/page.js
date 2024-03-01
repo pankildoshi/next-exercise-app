@@ -16,7 +16,6 @@ export default function page() {
     fetch(`../api/workout/${userId}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setWorkouts(data);
       });
   }, []);
@@ -34,37 +33,62 @@ export default function page() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        workouts.push(data.data);
+        setWorkout("");
       });
 
     setShowModal(false);
   };
 
-  if (window.localStorage.getItem("token") == null) {
+  if (localStorage.getItem("token") == null) {
     router.push("/");
     return;
   }
 
   return (
     <div className="min-h-[75vh] lg:px-6">
-      <div className="flex justify-between items-center">
-        <p className="text-3xl font-semibold">Your Workouts</p>
-        <button
-          type="button"
-          data-modal-target="authentication-modal"
-          data-modal-toggle="authentication-modal"
-          className="text-white bg-rose-600 font-semibold text-lg rounded-xl py-4 px-3"
-          onClick={() => setShowModal(true)}
-        >
-          Create Workout
-        </button>
-      </div>
-      <div className="flex flex-col py-6">
-        {workouts.map((workout, index) => (
-          <Accordian key={index} workout={workout} />
-        ))}
-      </div>
-
+      {workouts.length === 0 ? (
+        <div className="min-h-[75vh] lg:px-6">
+          <div className="flex flex-col justify-center items-center my-12">
+            <p className="text-rose-600 opacity-50 text-[140px]">
+              No Workouts!
+            </p>
+            <p className="text-3xl">Add your exercises to your workout</p>
+            <button
+              type="button"
+              data-modal-target="authentication-modal"
+              data-modal-toggle="authentication-modal"
+              className="text-white bg-rose-600 font-semibold text-lg rounded-xl py-4 px-3 my-8"
+              onClick={() => {
+                setShowModal(true);
+                console.log(showModal);
+              }}
+            >
+              Create Workout
+            </button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="flex justify-between items-center">
+            <p className="text-3xl font-semibold">Your Workouts</p>
+            <button
+              type="button"
+              data-modal-target="authentication-modal"
+              data-modal-toggle="authentication-modal"
+              className="text-white bg-rose-600 font-semibold text-lg rounded-xl py-4 px-3"
+              onClick={() => setShowModal(true)}
+            >
+              Create Workout
+            </button>
+          </div>
+          <div className="flex flex-col py-6">
+            {workouts.map((workout, index) => (
+              <Accordian key={index} workout={workout} />
+            ))}
+          </div>
+        </>
+      )}
       <div
         className={`${
           showModal ? "" : "hidden"

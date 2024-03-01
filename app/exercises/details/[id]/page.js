@@ -10,18 +10,16 @@ export default function Page({ params }) {
   const [exerciseVideos, setExerciseVideos] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`../../api/exercises/exercise/${params.id}`);
-      const data = await response.json();
-      setExercise(data);
+    fetch(`../../api/exercises/exercise/${params.id}`)
+      .then((res) => res.json())
+      .then((data) => setExercise(data));
 
-      const vidResponse = await fetch(`../../api/exercises/video/${data.name}`);
-      const vidData = await vidResponse.json();
-
-      setExerciseVideos(vidData);
-    };
-
-    fetchData();
+    // fetch(`../../api/exercises/video/${exercise.name}`)
+    //   .then((res) => {
+    //     console.log(res);
+    //     res.json();
+    //   })
+    //   .then((data) => setExerciseVideos(data));
   }, []);
 
   if (exercise == null) {
@@ -31,7 +29,7 @@ export default function Page({ params }) {
   return (
     <>
       <ExerciseDetails exercise={exercise} />
-      <ExerciseVideos name={exercise.name} exerciseVideos={exerciseVideos} />
+      {/* <ExerciseVideos name={exercise.name} exerciseVideos={exerciseVideos} /> */}
       <SimilarExercises
         equipment={exercise.equipment}
         target={exercise.target}

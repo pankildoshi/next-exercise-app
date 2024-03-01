@@ -21,7 +21,10 @@ export const POST = async (req, res) => {
       );
     } else {
       return new Response(
-        JSON.stringify({ message: "No such user found", status: 400 })
+        JSON.stringify({
+          message: "Invalid username or password!",
+          status: 400,
+        })
       );
     }
   } catch (error) {

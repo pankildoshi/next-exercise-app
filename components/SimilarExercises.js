@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import ExerciseCard from "./ExerciseCard";
 
 export default function SimilarExercises({ equipment, target }) {

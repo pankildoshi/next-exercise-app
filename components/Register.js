@@ -25,43 +25,41 @@ export default function Register() {
     })
       .then((res) => res.json())
       .then((data) => {
-        
         if (data.status === 201) {
           router.push("/auth/login");
         } else {
-          setStatusError(data.error);
+          setStatusError(data.message);
         }
       });
   };
   return (
     <div className="min-h-screen flex flex-col justify-center sm:px-6 lg:px-8">
-      {statusError !== "" && (
-        <div>
-          <p className="text-danger">{statusError}</p>
-        </div>
-      )}
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Create your account
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-600 max-w">
-          Or{" "}
-          <Link
-            href="/auth/login"
-            className="font-medium text-rose-600 hover:text-rose-500"
-          >
-            Sign in
-          </Link>
-        </p>
-      </div>
-
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <div className="sm:mx-auto sm:w-full sm:max-w-md">
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+              Create your account
+            </h2>
+            <p className="mt-2 text-center text-xl text-gray-600 max-w">
+              Or{" "}
+              <Link
+                href="/auth/login"
+                className="font-medium text-rose-600 hover:text-rose-500"
+              >
+                Sign in
+              </Link>
+            </p>
+          </div>
+          <form className="space-y-6 mt-8" onSubmit={handleSubmit}>
+            {statusError !== "" && (
+              <div>
+                <p className="text-red-600">{statusError}</p>
+              </div>
+            )}
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-xl font-medium text-gray-700"
               >
                 First Name
               </label>
@@ -82,7 +80,7 @@ export default function Register() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-xl font-medium text-gray-700"
               >
                 Last Name
               </label>
@@ -103,7 +101,7 @@ export default function Register() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-xl font-medium text-gray-700"
               >
                 Email address
               </label>
@@ -125,7 +123,7 @@ export default function Register() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-xl font-medium text-gray-700"
               >
                 Password
               </label>
@@ -147,7 +145,7 @@ export default function Register() {
             <div>
               <button
                 type="submit"
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-xl font-semibold rounded-md text-white bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
               >
                 Sign Up
               </button>
