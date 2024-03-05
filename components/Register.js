@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 export default function Register() {
   let router = useRouter();
@@ -14,6 +15,24 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Password requirements
+    const requirements = [
+      password.length >= 8,
+      /[A-Z]/.test(password),
+      /[a-z]/.test(password),
+      /\d/.test(password),
+    ];
+
+    const isValid = requirements.every(Boolean);
+
+    if (!isValid) {
+      setStatusError(
+        "Password length must be atleast 8 characters and must contain at least 1 uppercase letter, 1 lowercase letter and 1 digit."
+      );
+      return;
+    }
+
     fetch(`../../api/auth/register`, {
       method: "POST",
       body: JSON.stringify({
@@ -26,6 +45,12 @@ export default function Register() {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 201) {
+          toast.success(
+            "You are signed up successfully! Make sure you verify your email!",
+            {
+              className: "text-xl",
+            }
+          );
           router.push("/auth/login");
         } else {
           setStatusError(data.message);
@@ -34,8 +59,8 @@ export default function Register() {
   };
   return (
     <div className="min-h-screen flex flex-col justify-center sm:px-6 lg:px-8">
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <div className="my-8 sm:mx-auto sm:w-full sm:max-w-xl">
+        <div className="bg-white py-8 px-4 shadow-2xl sm:rounded-lg sm:px-10">
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Create your account
@@ -71,7 +96,7 @@ export default function Register() {
                   required
                   value={firstName}
                   onChange={(e) => setFistName(e.target.value)}
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-lg"
                   placeholder="Enter your first name"
                 />
               </div>
@@ -92,7 +117,7 @@ export default function Register() {
                   required
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-lg"
                   placeholder="Enter your last name"
                 />
               </div>
@@ -114,7 +139,7 @@ export default function Register() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-lg"
                   placeholder="Enter your email address"
                 />
               </div>
@@ -136,7 +161,7 @@ export default function Register() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-lg"
                   placeholder="Enter your password"
                 />
               </div>

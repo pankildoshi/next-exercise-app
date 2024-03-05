@@ -18,6 +18,13 @@ const UserSchema = new Schema({
     type: String,
     required: [true, "Password is required"],
   },
+  isEmailVerified: {
+    type: Boolean,
+    default: false,
+  },
+  emailVerficationToken: {
+    type: String,
+  },
 });
 
 const User = models.User || model("User", UserSchema);

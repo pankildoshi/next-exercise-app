@@ -1,5 +1,7 @@
-import { connectDB } from "@/utils/database";
+import bcrypt from "bcrypt";
+
 import User from "@/models/user";
+import { connectDB } from "@/utils/database";
 
 export const POST = async (req, res) => {
   const { email, password } = await req.json();
@@ -11,26 +13,39 @@ export const POST = async (req, res) => {
       email,
     });
 
-    if (userExists && password === userExists.password) {
-      return new Response(
-        JSON.stringify({
-          user: userExists,
-          message: "Login successful",
-          status: 200,
-        })
-      );
-    } else {
-      return new Response(
-        JSON.stringify({
-          message: "Invalid username or password!",
-          status: 400,
-        })
-      );
+    if (userExists) {
+      if (!userExists.isEmailVerified) {
+        return new Response(
+          JSON.stringify({
+            message: "Please verify your email and try again.",
+            status: 400,
+          })
+        );
+      }
+
+      const isPasswordValid = bcrypt.compare(password, userExists.password);
+
+      if (isPasswordValid) {
+        return new Response(
+          JSON.stringify({
+            user: userExists,
+            message: "Login successful",
+            status: 200,
+          })
+        );
+      } else {
+        return new Response(
+          JSON.stringify({
+            message: "Invalid email or password!",
+            status: 400,
+          })
+        );
+      }
     }
   } catch (error) {
     console.log(error);
-    return new Response(
-      JSON.stringify({ message: "Something went wrong", status: 500 })
-    );
   }
+  return new Response(
+    JSON.stringify({ message: "Something went wrong", status: 500 })
+  );
 };

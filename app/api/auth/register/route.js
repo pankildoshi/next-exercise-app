@@ -1,8 +1,12 @@
-import { connectDB } from "@/utils/database";
+import bcrypt from "bcrypt";
+
 import User from "@/models/user";
+import { connectDB } from "@/utils/database";
+import { sendmail, generateVerificationToken } from "@/utils/mail";
 
 export const POST = async (req, res) => {
   const { firstName, lastName, email, password } = await req.json();
+  const verificationToken = generateVerificationToken();
 
   try {
     await connectDB();
@@ -11,15 +15,19 @@ export const POST = async (req, res) => {
       email: email,
     });
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     if (!userExists) {
       const user = new User({
         firstName,
         lastName,
         email,
-        password,
+        password: hashedPassword,
+        emailVerficationToken: verificationToken,
       });
 
       await user.save();
+      sendmail(email, firstName, verificationToken);
       return new Response(
         JSON.stringify({ message: "User created", status: 201 })
       );
