@@ -9,14 +9,14 @@ export default function SimilarExercises({ equipment, target }) {
 
   useEffect(() => {
     const fetchEquipmentData = async () => {
-      const res = await fetch(`../../api/exercises/equipment/${equipment}`);
+      const res = await fetch(`../../../api/exercises/equipment/${equipment}`);
       const data = await res.json();
 
       setSimilarEquipmentExercise(data);
     };
 
     const fetchTargetData = async () => {
-      const res = await fetch(`../../api/exercises/target/${target}`);
+      const res = await fetch(`../../../api/exercises/target/${target}`);
       const data = await res.json();
 
       setSimilarTargetExercise(data);

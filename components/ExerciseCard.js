@@ -4,7 +4,7 @@ import React from "react";
 export default function ExerciseCard({ exercise }) {
   return (
     <div className="w-[400px] text-left p-4 border border-b-4 border-b-rose-600 shadow-lg rounded-lg">
-      <Link href={`../../exercises/details/${exercise.id}`}>
+      <Link href={`../../main/exercises/details/${exercise.id}`}>
         <div className="flex justify-center">
           <img
             width="200"

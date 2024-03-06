@@ -1,15 +1,16 @@
-import { exerciseOptions } from "@/utils/Options";
+import Exercise from "@/models/exercise";
+import { connectDB } from "@/utils/database";
 
 export const GET = async (req, { params }) => {
+  const { id } = params;
   try {
-    const response = await fetch(
-      `https://exercisedb.p.rapidapi.com/exercises/exercise/${params.id}`,
-      exerciseOptions
-    );
-    const exercise = await response.json();
+    connectDB();
+
+    const exercise = await Exercise.findOne({ id: id });
 
     return new Response(JSON.stringify(exercise), { status: 200 });
   } catch (error) {
     console.error(error);
+    return new Response({ message: "Something went wrong :(", status: 500 });
   }
 };

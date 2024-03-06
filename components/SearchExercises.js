@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 import HorizontalScrollbar from "./HorizontalScrollbar";
 import ExerciseCard from "./ExerciseCard";
 import Spinner from "./Spinner";
+import { bodyPartList } from "@/utils/bodypartList";
 
 export default function SearchExercises() {
   const [bodyPart, setBodyPart] = useState("all");
-  const [bodyPartList, setBodyPartList] = useState(["all"]);
 
   const [isSearched, setIsSearched] = useState(false);
   const [searching, setSearching] = useState(false);
@@ -16,10 +16,6 @@ export default function SearchExercises() {
   const [filteredExercises, setFilterExercises] = useState([]);
 
   useEffect(() => {
-    fetch("api/exercises/bodypartlist")
-      .then((res) => res.json())
-      .then((data) => setBodyPartList(["all", ...data]));
-
     fetch("api/exercises")
       .then((res) => res.json())
       .then((data) => setExercises(data));
