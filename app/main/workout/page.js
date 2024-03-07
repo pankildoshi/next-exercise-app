@@ -13,7 +13,7 @@ export default function page() {
   useEffect(() => {
     const userId = window.localStorage.getItem("token");
 
-    fetch(`../api/workout/${userId}`)
+    fetch(`/api/workout/${userId}`)
       .then((res) => res.json())
       .then((data) => {
         setWorkouts(data);
@@ -24,7 +24,7 @@ export default function page() {
     e.preventDefault();
 
     const userId = window.localStorage.getItem("token");
-    fetch("../api/workout/create", {
+    fetch("/api/workout/create", {
       method: "POST",
       body: JSON.stringify({
         workout,

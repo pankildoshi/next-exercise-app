@@ -12,9 +12,7 @@ export default function WorkoutCard({ exerciseId }) {
   const [exercise, setExercise] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        `../../api/exercises/exercise/${exerciseId}`
-      );
+      const response = await fetch(`/api/exercises/exercise/${exerciseId}`);
       const data = await response.json();
       setExercise(data);
     };
@@ -34,7 +32,7 @@ export default function WorkoutCard({ exerciseId }) {
 
       <div className="flex flex-1 flex-col justify-between">
         <div className="border-s border-gray-900/10 p-4 sm:border-l-transparent sm:p-6">
-          <Link href={`/exercises/details/${exercise.id}`}>
+          <Link href={`/main/exercises/details/${exercise.id}`}>
             <h3 className="font-bold uppercase text-gray-900">
               {exercise.name}
             </h3>

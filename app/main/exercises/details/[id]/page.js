@@ -10,11 +10,11 @@ export default function Page({ params }) {
   const [exerciseVideos, setExerciseVideos] = useState([]);
 
   useEffect(() => {
-    fetch(`../../../api/exercises/exercise/${params.id}`)
+    fetch(`/api/exercises/exercise/${params.id}`)
       .then((res) => res.json())
       .then((data) => setExercise(data));
 
-    // fetch(`../../api/exercises/video/${exercise.name}`)
+    // fetch(`/api/exercises/video/${exercise.name}`)
     //   .then((res) => {
     //     console.log(res);
     //     res.json();

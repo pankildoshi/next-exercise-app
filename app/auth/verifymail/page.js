@@ -9,7 +9,7 @@ export default function VerifyMail() {
 
   useEffect(() => {
     const token = searchParams.get("token");
-    fetch("../../api/auth/verifyMail", {
+    fetch("/api/auth/verifyMail", {
       method: "POST",
       body: JSON.stringify({
         token,

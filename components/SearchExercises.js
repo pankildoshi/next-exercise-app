@@ -16,7 +16,7 @@ export default function SearchExercises() {
   const [filteredExercises, setFilterExercises] = useState([]);
 
   useEffect(() => {
-    fetch("api/exercises")
+    fetch("/api/exercises")
       .then((res) => res.json())
       .then((data) => setExercises(data));
   }, []);
@@ -26,7 +26,7 @@ export default function SearchExercises() {
     setIsSearched(true);
     setSearching(true);
 
-    fetch(`api/exercises/name/${search}`)
+    fetch(`/api/exercises/name/${search}`)
       .then((res) => res.json())
       .then((data) => {
         setExercises(data);

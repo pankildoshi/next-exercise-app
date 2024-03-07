@@ -31,7 +31,7 @@ export default function Login() {
       return;
     }
 
-    fetch(`../../api/auth/login`, {
+    fetch(`/api/auth/login`, {
       method: "POST",
       crossDomain: true,
       body: JSON.stringify({

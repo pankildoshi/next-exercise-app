@@ -16,7 +16,7 @@ export default function ExerciseDetails({ exercise }) {
   useEffect(() => {
     const userId = window.localStorage.getItem("token");
 
-    fetch(`../../api/workout/${userId}`)
+    fetch(`/api/workout/${userId}`)
       .then((res) => res.json())
       .then((data) => {
         setWorkouts(data);
@@ -26,7 +26,7 @@ export default function ExerciseDetails({ exercise }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch("../../api/workout/addexercise", {
+    fetch("/api/workout/addexercise", {
       method: "POST",
       body: JSON.stringify({
         workoutId: selectedWorkout,

@@ -8,7 +8,7 @@ export default function Accordian({ workout }) {
   const [workoutExercises, setWorkoutExercises] = useState([]);
 
   useEffect(() => {
-    fetch(`../../api/workout/getexercise/${workout._id}`)
+    fetch(`/api/workout/getexercise/${workout._id}`)
       .then((res) => res.json())
       .then((data) => setWorkoutExercises(data));
   }, []);

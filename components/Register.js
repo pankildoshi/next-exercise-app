@@ -33,7 +33,7 @@ export default function Register() {
       return;
     }
 
-    fetch(`../../api/auth/register`, {
+    fetch(`/api/auth/register`, {
       method: "POST",
       body: JSON.stringify({
         firstName,
