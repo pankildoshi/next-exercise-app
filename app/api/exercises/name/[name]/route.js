@@ -8,7 +8,7 @@ export const GET = async (req, { params }) => {
 
     const exercises = await Exercise.find({
       name: { $regex: `.*${name}.*`, $options: "i" },
-    }).limit(10);
+    }).limit(9);
 
     return new Response(JSON.stringify(exercises), { status: 200 });
   } catch (error) {

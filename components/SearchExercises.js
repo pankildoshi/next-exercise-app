@@ -54,7 +54,7 @@ export default function SearchExercises() {
 
   return (
     <section id="exercises" className="w-full my-8 text-center">
-      <p className="font-bold text-3xl md:text-6xl mb-12">
+      <p className="font-bold text-3xl md:text-5xl mb-12">
         Awesome Exercises You <br /> Should Know
       </p>
       <div>
@@ -91,7 +91,7 @@ export default function SearchExercises() {
         ) : (
           <>
             {" "}
-            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-8">
+            <div className="flex flex-wrap justify-center mt-10">
               {isSearched === false && filteredExercises.length === 0
                 ? exercises.map((exercise) => (
                     <ExerciseCard key={exercise.id} exercise={exercise} />

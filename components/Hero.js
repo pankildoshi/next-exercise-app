@@ -5,12 +5,12 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <div className="mb-12 grid grid-cols-2 max-h-screen overflow-hidden">
-      <div className="col-span-1">
+    <div className="mb-12 grid grid-cols-2 max-h-screen lg:overflow-hidden">
+      <div className="col-span-2 lg:col-span-1">
         <p className="text-rose-600 font-bold text-3xl md:text-5xl mt-12">
           Fitness Club
         </p>
-        <p className="my-8 font-bold text-[48px] md:text-[68px]">
+        <p className="my-8 font-bold text-3xl md:text-5xl">
           Sweat, Smile <br />
           And Repeat
         </p>

@@ -3,26 +3,28 @@ import React from "react";
 
 export default function ExerciseCard({ exercise }) {
   return (
-    <div className="w-[400px] text-left p-4 border border-b-4 border-b-rose-600 shadow-lg rounded-lg">
-      <Link href={`/main/exercises/details/${exercise.id}`}>
-        <div className="flex justify-center">
-          <img
-            width="200"
-            height="200"
-            src={exercise.gifUrl}
-            alt="exercise gif"
-          />
+    <div className="m-4 max-w-sm">
+      <div class="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
+        <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white shadow-lg bg-clip-border rounded-xl h-80">
+          <img src={exercise.gifUrl} alt="Exercise-GIF" />
         </div>
-        <p className="text-xl py-2 font-semibold capitalize">{exercise.name}</p>
-        <div className="flex gap-2">
-          <button className="px-2 rounded-lg text-sm bg-orange-500 text-white">
-            {exercise.bodyPart.toUpperCase()}
-          </button>
-          <button className="px-2 rounded-lg text-sm bg-green-500 text-white">
-            {exercise.target.toUpperCase()}
-          </button>
+        <div class="p-6 text-center">
+          <h4 class="capitalize text-nowrap overflow-hidden hover:overflow-visible hover:text-wrap block mb-2 font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-gray-900">
+            {exercise.name}
+          </h4>
+          <p class="uppercase block font-sans text-base antialiased font-medium leading-relaxed bg-clip-text bg-gradient-to-tr from-gray-600 to-gray-400">
+            {exercise.target} / {exercise.bodyPart}
+          </p>
         </div>
-      </Link>
+        <div class="flex justify-center p-6 pt-2 gap-5">
+          <Link
+            href={`/main/exercises/details/${exercise.id}`}
+            class="block font-sans text-xl antialiased font-medium leading-relaxed text-rose-600"
+          >
+            View
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

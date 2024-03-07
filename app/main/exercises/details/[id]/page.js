@@ -27,13 +27,13 @@ export default function Page({ params }) {
   }
 
   return (
-    <>
+    <div className="px-6 md:px-0">
       <ExerciseDetails exercise={exercise} />
       {/* <ExerciseVideos name={exercise.name} exerciseVideos={exerciseVideos} /> */}
       <SimilarExercises
         equipment={exercise.equipment}
         target={exercise.target}
       />
-    </>
+    </div>
   );
 }
