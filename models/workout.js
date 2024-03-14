@@ -1,13 +1,16 @@
 import { Schema, model, models } from "mongoose";
 
 const WorkoutSchema = new Schema({
-  workout: {
+  name: {
     type: String,
-    required: [true, "Wprkout name is required"],
+    required: [true, "Workout name is required"],
   },
   userId: {
     type: String,
     required: true,
+  },
+  exercises: {
+    type: Array,
   },
 });
 

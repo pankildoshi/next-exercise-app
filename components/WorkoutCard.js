@@ -1,63 +1,37 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-
-import BodyPartIcon from "@/assets/icons/body-part.png";
-import EquipmentIcon from "@/assets/icons/equipment.png";
-import TargetIcon from "@/assets/icons/target.png";
-import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 
-export default function WorkoutCard({ exerciseId }) {
-  const [exercise, setExercise] = useState(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`/api/exercises/exercise/${exerciseId}`);
-      const data = await response.json();
-      setExercise(data);
-    };
-
-    fetchData();
-  }, []);
-  if (!exercise) return;
+export default function WorkoutCard({ workout, deleteWorkout }) {
   return (
-    <article className="flex bg-white transition hover:shadow-xl">
-      <div className="hidden sm:block sm:basis-56">
-        <img
-          alt="exericse gif"
-          src={exercise.gifUrl}
-          className="aspect-square h-full w-full object-cover"
-        />
-      </div>
-
-      <div className="flex flex-1 flex-col justify-between">
-        <div className="border-s border-gray-900/10 p-4 sm:border-l-transparent sm:p-6">
-          <Link href={`/main/exercises/details/${exercise.id}`}>
-            <h3 className="font-bold uppercase text-gray-900">
-              {exercise.name}
-            </h3>
+    <div className="p-4 border min-w-80 max-w-96 border-gray-600 rounded-md bg-white transition hover:shadow-xl">
+      <div className="flex flex-row justify-between items-center">
+        <p className="text-gray-600 font-semibold text-xl">{workout.name}</p>
+        <div className="flex gap-4">
+          <button
+            title="Delete Workout"
+            className="text-rose-600"
+            onClick={() => deleteWorkout(workout._id)}
+          >
+            <i className="fa-solid fa-trash"></i>
+          </button>
+          <Link
+            title="Start Workout"
+            className="text-rose-600"
+            href={`/main/workout/start?id=${workout._id}`}
+          >
+            <i className="fa-solid fa-play"></i>
           </Link>
-
-          <div className="flex gap-3 items-center my-3">
-            <Image src={BodyPartIcon} alt="Bodypart image" />
-            <span className="px-2 font-medium py-1 mr-2 rounded-xl text-md uppercase">
-              {exercise.bodyPart}
-            </span>
-          </div>
-          <div className="flex gap-3 items-center my-3">
-            <Image src={EquipmentIcon} alt="Bodypart image" />
-            <span className="px-2 font-medium py-1 mr-2 rounded-xl text-md uppercase">
-              {exercise.equipment}
-            </span>
-          </div>
-          <div className="flex gap-3 items-center my-3">
-            <Image src={TargetIcon} alt="Bodypart image" />
-            <span className="px-2 font-medium py-1 mr-2 rounded-xl text-md uppercase">
-              {exercise.target}
-            </span>
-          </div>
         </div>
       </div>
-    </article>
+      <div className="mt-4 text-lg">
+        {workout.exercises.map((exercise, index) => (
+          <p key={index}>
+            <span className="mx-1">{exercise.sets}</span>
+            <i className="fa-solid fa-xmark"></i>
+            <span className="capitalize mx-1">{exercise.name}</span>
+          </p>
+        ))}
+      </div>
+    </div>
   );
 }

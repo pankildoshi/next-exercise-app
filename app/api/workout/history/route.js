@@ -1,21 +1,23 @@
-import Workout from "@/models/workout";
+import WorkoutDone from "@/models/workoutDone";
 import { connectDB } from "@/utils/database";
 
 export const POST = async (req) => {
-  const { workout, userId } = await req.json();
+  const { name, userId, exercisesDone, time } = await req.json();
 
   try {
     await connectDB();
 
-    const newWorkout = new Workout({
-      workout,
-      userId,
-    });
-
-    const response = await newWorkout.save();
+    const response = await WorkoutDone.insertMany([
+      {
+        name: name,
+        userId: userId,
+        exercisesDone: exercisesDone,
+        time: time,
+      },
+    ]);
     return new Response(
       JSON.stringify({
-        message: "Workout created",
+        message: "Workout history saved",
         data: response,
         status: 201,
       })

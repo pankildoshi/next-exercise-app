@@ -1,17 +1,17 @@
 import { connectDB } from "@/utils/database";
-import WorkoutExercise from "@/models/workout_exercise";
+import Workout from "@/models/workout";
 
 export const GET = async (req, { params }) => {
-  const workoutId = params.id;
+  const userId = params.userId;
 
   try {
     await connectDB();
 
-    const data = await WorkoutExercise.find({
-      workoutId,
+    const workouts = await Workout.find({
+      userId,
     });
 
-    return new Response(JSON.stringify(data), { status: 200 });
+    return new Response(JSON.stringify(workouts), { status: 200 });
   } catch (error) {
     console.log(error);
     return new Response(JSON.stringify({ message: "Something went wrong" }), {
