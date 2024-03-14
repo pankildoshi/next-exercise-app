@@ -5,6 +5,7 @@ import HorizontalScrollbar from "./HorizontalScrollbar";
 import ExerciseCard from "./ExerciseCard";
 import Spinner from "./Spinner";
 import { bodyPartList } from "@/utils/bodypartList";
+import BodyPart from "./BodyPart";
 
 export default function SearchExercises() {
   const [bodyPart, setBodyPart] = useState("all");
@@ -75,12 +76,18 @@ export default function SearchExercises() {
         </form>
       </div>
       <div className="mt-8">
-        <HorizontalScrollbar
-          data={bodyPartList}
-          bodyPart={bodyPart}
-          setBodyPart={setBodyPart}
-          handleBodyPartChange={handleBodyPartChange}
-        />
+        <HorizontalScrollbar>
+          {bodyPartList.map((item) => (
+            <BodyPart
+              key={item.id || item}
+              itemId={item.id || item}
+              item={item}
+              bodyPart={bodyPart}
+              setBodyPart={setBodyPart}
+              handleBodyPartChange={handleBodyPartChange}
+            />
+          ))}
+        </HorizontalScrollbar>
       </div>
       <div className="text-left mt-16 px-2 lg:px-10 ">
         <p className="text-4xl border-b-4 border-rose-600 font-bold pb-4">
