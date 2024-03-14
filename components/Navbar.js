@@ -76,9 +76,12 @@ export default function Navbar() {
                 >
                   My Workout
                 </Link>
-                <p className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-rose-600 md:p-0">
+                <Link
+                  href={`/main/profile`}
+                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-rose-600 md:p-0"
+                >
                   {displayName}
-                </p>
+                </Link>
                 <button
                   onClick={() => {
                     window.localStorage.removeItem("token");

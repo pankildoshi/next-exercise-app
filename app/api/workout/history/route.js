@@ -29,3 +29,26 @@ export const POST = async (req) => {
     );
   }
 };
+
+export const GET = async (req) => {
+  const searchParams = req.nextUrl.searchParams;
+  const id = searchParams.get("id");
+
+  try {
+    await connectDB();
+
+    const workouts = await WorkoutDone.find({ userId: id });
+
+    return new Response(
+      JSON.stringify({
+        data: workouts,
+        status: 200,
+      })
+    );
+  } catch (error) {
+    console.log(error);
+    return new Response(
+      JSON.stringify({ message: "Something went wrong", status: 500 })
+    );
+  }
+};
