@@ -13,7 +13,7 @@ export default function ExerciseCard({ exercise }) {
             {exercise.name}
           </h4>
           <p className="uppercase block font-sans text-base antialiased font-medium leading-relaxed bg-clip-text bg-gradient-to-tr from-gray-600 to-gray-400">
-            {exercise.target} / {exercise.bodyPart}
+            {exercise.target} / {exercise.bodyPart} / {exercise.equipment}
           </p>
         </div>
         <div className="flex justify-center p-6 pt-2 gap-5">

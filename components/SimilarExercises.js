@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import ExerciseCard from "./ExerciseCard";
+import HorizontalScrollbar from "./HorizontalScrollbar";
 
 export default function SimilarExercises({ equipment, target }) {
   const [similarEquipmentExercise, setSimilarEquipmentExercise] = useState([]);
@@ -30,26 +31,36 @@ export default function SimilarExercises({ equipment, target }) {
     <div className="p-1 md:p-6">
       <div className="my-4">
         <p className="my-4 text-2xl lg:text-3xl font-semibold">
-          Similar exercises based on equipment
+          Similar exercises based on equipment -{" "}
+          <span className="capitalize text-rose-600">{equipment}</span>
         </p>
-        <div className="flex flex-wrap">
-          {similarEquipmentExercise?.slice(0, 3).map((item) => (
-            <div itemId={item.id} key={item.id} className="mx-4 w-[450px]">
-              <ExerciseCard exercise={item} />
-            </div>
-          ))}
+        <div className="mt-2">
+          <HorizontalScrollbar>
+            {similarEquipmentExercise?.map((item) => (
+              <ExerciseCard
+                key={item.id || item}
+                itemId={item.id || item}
+                exercise={item}
+              />
+            ))}
+          </HorizontalScrollbar>
         </div>
       </div>
       <div className="my-4">
         <p className="my-4 text-2xl lg:text-3xl font-semibold">
-          Similar exercises based on target
+          Similar exercises based on target -{" "}
+          <span className="capitalize text-rose-600">{target}</span>
         </p>
-        <div className="flex flex-wrap">
-          {similarTargetExercise?.slice(0, 3).map((item) => (
-            <div key={item.id} className="mx-4 w-[450px] h-[300px]">
-              <ExerciseCard exercise={item} />
-            </div>
-          ))}
+        <div className="mt-2">
+          <HorizontalScrollbar>
+            {similarTargetExercise?.map((item) => (
+              <ExerciseCard
+                key={item.id || item}
+                itemId={item.id || item}
+                exercise={item}
+              />
+            ))}
+          </HorizontalScrollbar>
         </div>
       </div>
     </div>
