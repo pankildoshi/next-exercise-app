@@ -4,9 +4,11 @@ import React from "react";
 
 export default function MainLayout({ children }) {
   return (
-    <div className="">
-      <Navbar />
-      {children}
+    <div className="flex flex-col h-screen justify-between">
+      <div>
+        <Navbar />
+        {children}
+      </div>
       <Footer />
     </div>
   );
