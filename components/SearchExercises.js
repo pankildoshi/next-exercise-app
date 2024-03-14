@@ -19,7 +19,10 @@ export default function SearchExercises() {
   useEffect(() => {
     fetch("/api/exercises")
       .then((res) => res.json())
-      .then((data) => setExercises(data));
+      .then((data) => {
+        setExercises(data);
+        setFilterExercises(data);
+      });
   }, []);
 
   const handleSearch = (e) => {
@@ -31,15 +34,13 @@ export default function SearchExercises() {
       .then((res) => res.json())
       .then((data) => {
         setExercises(data);
+        setFilterExercises(data);
+        setBodyPart("all");
+        setSearching(false);
       });
-
-    handleBodyPartChange(bodyPart);
-    setSearching(false);
   };
 
   const handleBodyPartChange = (bodyPartLocal) => {
-    setFilterExercises([]);
-
     let selectedExercises = [];
     if (bodyPartLocal === "all") {
       setFilterExercises(exercises);
@@ -97,28 +98,20 @@ export default function SearchExercises() {
           <Spinner text="Searching..." />
         ) : (
           <>
-            {" "}
-            <div className="flex flex-wrap justify-center mt-10">
-              {isSearched === false && filteredExercises.length === 0
-                ? exercises.map((exercise) => (
-                    <ExerciseCard key={exercise.id} exercise={exercise} />
-                  ))
-                : filteredExercises.map((exercise) => (
-                    <ExerciseCard key={exercise.id} exercise={exercise} />
-                  ))}
-            </div>
-            <div>
-              {isSearched === true && filteredExercises.length === 0 ? (
-                <div className="w-full h-[60vh] text-center">
-                  <p className="font-bold text-rose-200  text-[200px] hidden lg:block">
-                    Oops!
-                  </p>
-                  <p className="text-2xl font-semibold">No Search Results...</p>
-                </div>
-              ) : (
-                <div></div>
-              )}
-            </div>
+            {filteredExercises.length === 0 ? (
+              <div className="w-full h-[60vh] text-center">
+                <p className="font-bold text-rose-200  text-[200px] hidden lg:block">
+                  Oops!
+                </p>
+                <p className="text-2xl font-semibold">No Exercises...</p>
+              </div>
+            ) : (
+              <div className="flex flex-wrap justify-center mt-10">
+                {filteredExercises.map((exercise) => (
+                  <ExerciseCard key={exercise.id} exercise={exercise} />
+                ))}
+              </div>
+            )}
           </>
         )}
       </div>
