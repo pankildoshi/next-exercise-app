@@ -5,7 +5,10 @@ export const GET = async () => {
   try {
     connectDB();
 
-    const exercises = await Exercise.find().limit(9);
+    const exercises = await Exercise.find(
+      {},
+      { secondaryMuscles: 0, instructions: 0 }
+    ).limit(9);
 
     return new Response(JSON.stringify(exercises), { status: 200 });
   } catch (error) {

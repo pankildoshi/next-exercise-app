@@ -6,7 +6,10 @@ export const GET = async (req, { params }) => {
   try {
     connectDB();
 
-    const data = await Exercise.find({ equipment: type }).limit(5);
+    const data = await Exercise.find(
+      { equipment: type },
+      { secondaryMuscles: 0, instructions: 0 }
+    ).limit(5);
 
     return new Response(JSON.stringify(data), { status: 200 });
   } catch (error) {

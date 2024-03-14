@@ -6,9 +6,12 @@ export const GET = async (req, { params }) => {
   try {
     connectDB();
 
-    const exercises = await Exercise.find({
-      name: { $regex: `.*${name}.*`, $options: "i" },
-    }).limit(9);
+    const exercises = await Exercise.find(
+      {
+        name: { $regex: `.*${name}.*`, $options: "i" },
+      },
+      { secondaryMuscles: 0, instructions: 0 }
+    ).limit(9);
 
     return new Response(JSON.stringify(exercises), { status: 200 });
   } catch (error) {
