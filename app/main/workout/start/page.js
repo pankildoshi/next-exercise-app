@@ -1,5 +1,6 @@
 "use client";
 
+import SetTile from "@/components/SetTile";
 import Spinner from "@/components/Spinner";
 import Timer from "@/components/Timer";
 import Link from "next/link";
@@ -140,7 +141,7 @@ export default function page() {
 
   return (
     <div className="my-8 px-3 flex flex-col justify-center mx-auto max-w-lg">
-      <div className="flex justify-between items-center my-4">
+      <div className="flex justify-between items-center my-4 border-b-2 py-4">
         <div>
           <p className="text-2xl font-bold text-gray-900">{workout.name}</p>
           <Timer ref={timeRef} />
@@ -164,41 +165,25 @@ export default function page() {
       <div>
         {workout.exercises.map((exercise, exerciseIndex) => {
           return (
-            <div
-              key={exerciseIndex}
-              className="py-2 border-b-2 border-gray-900"
-            >
+            <div key={exerciseIndex} className="p-4 my-2 rounded-md">
               <Link
                 href={`/main/exercises/details/${exercise.id}`}
                 target="_blank"
                 className="capitalize text-lg text-gray-900 font-semibold hover:text-blue-600 hover:underline"
               >
-                {exercise.name}
+                {exercise.name}{" "}
+                <i class="text-gray-400 text-sm font-thin fa-solid fa-up-right-from-square"></i>
               </Link>
               <div>
                 {Array.from({ length: parseInt(exercise.sets) }).map(
                   (_, index) => (
-                    <div
-                      key={index}
-                      className="w-full flex justify-between items-center"
-                    >
-                      <p>Set {index + 1}</p>
-                      <div className="flex gap-4">
-                        <div className="flex flex-col items-center">
-                          <p>KG</p>
-                          <p>{exercise.kg}</p>
-                        </div>
-                        <div className="flex flex-col items-center">
-                          <p>REPS</p>
-                          <p>{exercise.reps}</p>
-                        </div>
-
-                        <input
-                          type="checkbox"
-                          onChange={(e) => handleCheckChange(e, exerciseIndex)}
-                        />
-                      </div>
-                    </div>
+                    <SetTile
+                      index={index}
+                      exerciseIndex={exerciseIndex}
+                      kg={exercise.kg}
+                      reps={exercise.reps}
+                      handleCheckChange={handleCheckChange}
+                    />
                   )
                 )}
               </div>
