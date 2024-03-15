@@ -11,7 +11,7 @@ export const GET = async (req, { params }) => {
         name: { $regex: `.*${name}.*`, $options: "i" },
       },
       { secondaryMuscles: 0, instructions: 0 }
-    ).limit(9);
+    );
 
     return new Response(JSON.stringify(exercises), { status: 200 });
   } catch (error) {

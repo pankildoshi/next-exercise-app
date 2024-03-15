@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import HorizontalScrollbar from "./HorizontalScrollbar";
-import ExerciseCard from "./ExerciseCard";
 import Spinner from "./Spinner";
 import { bodyPartList } from "@/utils/bodypartList";
 import BodyPart from "./BodyPart";
+import PaginatedExercises from "./PaginatedExercises";
 
 export default function SearchExercises() {
   const [bodyPart, setBodyPart] = useState("all");
@@ -106,11 +106,7 @@ export default function SearchExercises() {
                 <p className="text-2xl font-semibold">No Exercises...</p>
               </div>
             ) : (
-              <div className="flex flex-wrap justify-center mt-10">
-                {filteredExercises.map((exercise) => (
-                  <ExerciseCard key={exercise.id} exercise={exercise} />
-                ))}
-              </div>
+              <PaginatedExercises items={filteredExercises} />
             )}
           </>
         )}
