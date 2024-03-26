@@ -23,7 +23,10 @@ export const POST = async (req, res) => {
         );
       }
 
-      const isPasswordValid = bcrypt.compare(password, userExists.password);
+      const isPasswordValid = await bcrypt.compare(
+        password,
+        userExists.password
+      );
 
       if (isPasswordValid) {
         return new Response(

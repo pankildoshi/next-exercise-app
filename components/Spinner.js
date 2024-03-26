@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function Spinner({ text }) {
+export default function Spinner({ text, className }) {
   return (
-    <div className="h-[80vh] mt-16 text-center">
+    <div className={`${className} w-full mt-16 text-center`}>
       <div role="status">
         <svg
           aria-hidden="true"
