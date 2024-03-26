@@ -23,9 +23,16 @@ export const sendmail = async (email, firstName, verificationToken) => {
     html: emailVerificationTemplate,
   };
 
-  const response = await transporter.sendMail(mailOptions);
-
-  return response;
+  await new Promise((resolve, reject) => {
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        resolve(info);
+      }
+    });
+  });
 };
 
 export const generateVerificationToken = () => {
