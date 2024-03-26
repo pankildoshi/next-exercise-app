@@ -16,6 +16,8 @@ export default function SearchExercises() {
   const [exercises, setExercises] = useState([]);
   const [filteredExercises, setFilterExercises] = useState([]);
 
+  const [trigger, setTrigger] = useState(false);
+
   useEffect(() => {
     fetch("/api/exercises")
       .then((res) => res.json())
@@ -23,10 +25,25 @@ export default function SearchExercises() {
         setExercises(data);
         setFilterExercises(data);
       });
-  }, []);
+  }, [trigger]);
+
+  const handleChange = (e) => {
+    const searchText = e.target.value;
+
+    if (searchText === "") {
+      setTrigger((prev) => !prev);
+    }
+
+    setSearch(searchText);
+  };
 
   const handleSearch = (e) => {
     e.preventDefault();
+
+    if (search === "") {
+      return;
+    }
+
     setIsSearched(true);
     setSearching(true);
 
@@ -64,7 +81,7 @@ export default function SearchExercises() {
           <input
             type="text"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={handleChange}
             className="border text-lg font-semibold px-4 py-4 w-1/2"
             placeholder="Search Exercises, Bodypart"
           />
@@ -92,7 +109,7 @@ export default function SearchExercises() {
       </div>
       <div className="text-left mt-16 px-2 lg:px-10 ">
         <p className="text-4xl border-b-4 border-rose-600 font-bold pb-4">
-          {isSearched ? "Search Results" : "Recommanded Exercises"}
+          {isSearched ? "Search Results" : "Exercises"}
         </p>
         {searching ? (
           <Spinner text="Searching..." />
