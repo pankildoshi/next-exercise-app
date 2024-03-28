@@ -52,6 +52,7 @@ export default function Login() {
             "displayName",
             data.user.firstName + " " + data.user.lastName
           );
+          window.localStorage.setItem("userEmail", data.user.email);
           setSigning(false);
           toast.success("You are signed in successfully!", {
             className: "text-xl",

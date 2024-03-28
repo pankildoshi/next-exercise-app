@@ -1,3 +1,4 @@
+import { getDateDisplayFormat } from "@/utils/date";
 import React from "react";
 
 export default function HistoryWorkoutCard({ workout }) {
@@ -20,7 +21,7 @@ export default function HistoryWorkoutCard({ workout }) {
     for (let exercise of workout.exercisesDone) {
       total += exercise.totalkgs;
     }
-    return total;
+    return `${total}kgs`;
   };
 
   return (
@@ -30,11 +31,11 @@ export default function HistoryWorkoutCard({ workout }) {
       </div>
       <div className="mt-1 flex gap-8">
         <div className="flex gap-1 items-baseline">
-          <i class="text-rose-600 fa-solid fa-clock"></i>
+          <i className="text-rose-600 fa-solid fa-clock"></i>
           <p>{getDisplayTime()}</p>
         </div>
         <div className="flex gap-1 items-baseline">
-          <i class="text-rose-600 fa-solid fa-weight-hanging"></i>
+          <i className="text-rose-600 fa-solid fa-weight-hanging"></i>
           <p>{getTotalkgs()}</p>
         </div>
       </div>
@@ -48,7 +49,9 @@ export default function HistoryWorkoutCard({ workout }) {
         ))}
       </div>
       <div className="mt-2">
-        <p className="text-gray-600 italic">Date: {workout.date}</p>
+        <p className="text-gray-600 italic">
+          Date: {getDateDisplayFormat(workout.date)}
+        </p>
       </div>
     </div>
   );

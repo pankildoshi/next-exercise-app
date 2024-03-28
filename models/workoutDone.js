@@ -18,7 +18,7 @@ const WorkoutDoneSchema = new Schema({
   },
   date: {
     type: String,
-    default: `${new Date().getDate()}-${new Date().getMonth()}-${new Date().getFullYear()}`,
+    default: new Date().toISOString(),
   },
 });
 
