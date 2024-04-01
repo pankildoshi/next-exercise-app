@@ -2,12 +2,20 @@
 
 import React, { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
-import HistoryWorkoutCard from "@/components/HistoryWorkoutCard";
-import WeightChart from "@/components/WeightChart";
-import Spinner from "@/components/Spinner";
-import WorkoutCountChart from "@/components/WorkoutCountChart";
-import UserImage from "@/assets/images/user.jpg";
+import dynamic from "next/dynamic";
 import Image from "next/image";
+
+import UserImage from "@/assets/images/user.jpg";
+import HistoryWorkoutCard from "@/components/HistoryWorkoutCard";
+import Spinner from "@/components/Spinner";
+
+const WeightChart = dynamic(() => import("@/components/WeightChart"), {
+  ssr: false,
+});
+const WorkoutCountChart = dynamic(
+  () => import("@/components/WorkoutCountChart"),
+  { ssr: false }
+);
 
 export default function page() {
   const [workouts, setWorkouts] = useState([]);
