@@ -1,33 +1,11 @@
-"use client";
-
-import React, { useState } from "react";
+import React from "react";
 
 import BodyPartIcon from "@/assets/icons/body-part.png";
 import EquipmentIcon from "@/assets/icons/equipment.png";
 import TargetIcon from "@/assets/icons/target.png";
 import Image from "next/image";
-import Link from "next/link";
 
 export default function ExerciseDetails({ exercise }) {
-  const [showModal, setShowModal] = useState(false);
-  const [selectedWorkout, setSelectedWorkout] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    fetch("/api/workout/addexercise", {
-      method: "POST",
-      body: JSON.stringify({
-        workoutId: selectedWorkout,
-        exerciseId: exercise.id,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-
-    setShowModal(false);
-  };
-
   return (
     <div className="p-1 md:p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <div className="md:mr-12 lg:col-span-1">
