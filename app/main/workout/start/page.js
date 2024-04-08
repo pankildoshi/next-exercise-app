@@ -3,15 +3,17 @@
 import SetTile from "@/components/SetTile";
 import Spinner from "@/components/Spinner";
 import Timer from "@/components/Timer";
+import UserContext from "@/utils/UserContext";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 const InfoIcon = <i class="fa-solid fa-circle-info"></i>;
 
 export default function page() {
   const timeRef = useRef(null);
+  const { user } = useContext(UserContext);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -24,6 +26,10 @@ export default function page() {
   const [exercisesDone, setExercisesDone] = useState([]);
 
   useEffect(() => {
+    if (user === null) {
+      redirect("/main");
+    }
+
     fetch(`/api/workout/${id}`)
       .then((res) => res.json())
       .then((data) => {
@@ -95,7 +101,6 @@ export default function page() {
     setIsStarted(false);
     timeRef.current.startAndStop();
 
-    const userId = window.localStorage.getItem("token");
     const time = timeRef.current.getTime();
 
     const completedExercises = [];
@@ -111,7 +116,7 @@ export default function page() {
         name: workout.name,
         exercisesDone: completedExercises,
         time: time,
-        userId: userId,
+        userId: user._id,
       }),
     })
       .then((res) => res.json())

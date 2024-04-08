@@ -2,11 +2,13 @@
 
 import ExerciseTile from "@/components/ExerciseTile";
 import Spinner from "@/components/Spinner";
+import UserContext from "@/utils/UserContext";
 import { useRouter, redirect } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function page() {
+  const { user } = useContext(UserContext);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -17,9 +19,7 @@ export default function page() {
   const [exercises, setExercises] = useState([]);
 
   useEffect(() => {
-    const userId = window.localStorage.getItem("token");
-
-    if (userId === null) {
+    if (user === null) {
       redirect("/main");
     }
 
@@ -51,7 +51,6 @@ export default function page() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const userId = localStorage.getItem("token");
 
     exerciseTiles.forEach((tile) => {
       const exercise = exercises.find(
@@ -64,7 +63,7 @@ export default function page() {
       method: "POST",
       body: JSON.stringify({
         name: workoutName,
-        userId: userId,
+        userId: user._id,
         exercises: exerciseTiles,
       }),
     })

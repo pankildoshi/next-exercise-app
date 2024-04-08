@@ -1,12 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import Spinner from "./Spinner";
+import UserContext from "@/utils/UserContext";
 
 export default function Login() {
+  const { setUser } = useContext(UserContext);
+
   let router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -47,12 +50,7 @@ export default function Login() {
       .then((data) => {
         if (data.status === 200) {
           setStatusError("");
-          window.localStorage.setItem("token", data.user._id);
-          window.localStorage.setItem(
-            "displayName",
-            data.user.firstName + " " + data.user.lastName
-          );
-          window.localStorage.setItem("userEmail", data.user.email);
+          setUser(data.user);
           setSigning(false);
           toast.success("You are signed in successfully!", {
             className: "text-xl",

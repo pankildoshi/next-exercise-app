@@ -31,7 +31,12 @@ export const POST = async (req, res) => {
       if (isPasswordValid) {
         return new Response(
           JSON.stringify({
-            user: userExists,
+            user: {
+              _id: userExists._id,
+              firstName: userExists.firstName,
+              lastName: userExists.lastName,
+              email: userExists.email,
+            },
             message: "Login successful",
             status: 200,
           })

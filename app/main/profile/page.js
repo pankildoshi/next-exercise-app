@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -8,6 +8,7 @@ import Image from "next/image";
 import UserImage from "@/assets/images/user.jpg";
 import HistoryWorkoutCard from "@/components/HistoryWorkoutCard";
 import Spinner from "@/components/Spinner";
+import UserContext from "@/utils/UserContext";
 
 const WeightChart = dynamic(() => import("@/components/WeightChart"), {
   ssr: false,
@@ -18,17 +19,17 @@ const WorkoutCountChart = dynamic(
 );
 
 export default function page() {
+  const { user } = useContext(UserContext);
+
   const [workouts, setWorkouts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const userId = window.localStorage.getItem("token");
-
-    if (userId === null) {
+    if (user === null) {
       redirect("/main");
     }
 
-    fetch(`/api/workout/history?id=${userId}`)
+    fetch(`/api/workout/history?id=${user._id}`)
       .then((res) => res.json())
       .then((data) => {
         setWorkouts(data.data);
@@ -91,11 +92,9 @@ export default function page() {
         />
         <div>
           <p className="text-2xl font-semibold">
-            {localStorage.getItem("displayName")}
+            {user?.firstName} {user?.lastName}
           </p>
-          <p className="text-slate-500 text-sm">
-            {localStorage.getItem("userEmail")}
-          </p>
+          <p className="text-slate-500 text-sm">{user?.email}</p>
         </div>
       </div>
       <div className="mt-4 p-3 flex flex-col lg:flex-row gap-6">

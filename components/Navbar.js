@@ -1,27 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Logo from "@/assets/images/Logo.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import UserContext from "@/utils/UserContext";
 
 export default function Navbar() {
-  const [authenticated, setAuthenticated] = useState(false);
-  const [displayName, setDisplayName] = useState("");
   const [toggle, setToggle] = useState(false);
 
   const router = useRouter();
-
-  useEffect(() => {
-    const token = window.localStorage.getItem("token");
-    if (token) {
-      setAuthenticated(true);
-      setDisplayName(window.localStorage.getItem("displayName"));
-    } else {
-      setAuthenticated(false);
-    }
-  }, [authenticated]);
+  const { user, setUser } = useContext(UserContext);
 
   return (
     <nav className="bg-white border-gray-200">
@@ -68,7 +58,7 @@ export default function Navbar() {
             >
               Exercises
             </Link>
-            {authenticated ? (
+            {user ? (
               <>
                 <Link
                   href="/main/workout"
@@ -80,13 +70,11 @@ export default function Navbar() {
                   href={`/main/profile`}
                   className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-rose-600 md:p-0"
                 >
-                  {displayName}
+                  {user?.firstName} {user?.lastName}
                 </Link>
                 <button
                   onClick={() => {
-                    window.localStorage.removeItem("token");
-                    window.localStorage.removeItem("displayName");
-                    setAuthenticated("false");
+                    setUser(null);
                     router.push("/");
                   }}
                   className="bg-rose-600 rounded-lg mt-2 text-white px-3 py-2 text-lg font-semibold"

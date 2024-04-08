@@ -1,8 +1,13 @@
 "use client";
 
-import React from "react";
-import { SessionProvider } from "next-auth/react";
+import React, { useState } from "react";
+import UserContext from "@/utils/UserContext";
 
-export default function Provider({ children, session }) {
-  return <SessionProvider session={session}>{children}</SessionProvider>;
+export default function Provider({ children }) {
+  const [user, setUser] = useState(null);
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
 }

@@ -1,24 +1,25 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import Spinner from "@/components/Spinner";
 import WorkoutCard from "@/components/WorkoutCard";
 import toast from "react-hot-toast";
+import UserContext from "@/utils/UserContext";
 
 export default function page() {
+  const { user } = useContext(UserContext);
+
   const [workouts, setWorkouts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const userId = window.localStorage.getItem("token");
-
-    if (userId === null) {
+    if (user === null) {
       redirect("/main");
     }
 
-    fetch(`/api/workout/user/${userId}`)
+    fetch(`/api/workout/user/${user._id}`)
       .then((res) => res.json())
       .then((data) => {
         setWorkouts(data);
